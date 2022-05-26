@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>App Switcher</title>
+    <style>
+      body {
+        background: var(--colours-background);
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
+      }
+
+      :root {
+        --button-size: 3rem;
+        --button-padding: 0.1rem;
+
+        --colours-background: #121212;
+        --colours-surface: rgba(255, 255, 255, 0.1);
+        --colours-surface-active: rgba(255, 255, 255, 0.25);
+        --colours-surface-open: rgba(255, 255, 255, 0.4);
+        --colours-error: #cf6679;
+
+        --colours-text: white;
+
+        --colours-primary: #bb86fc;
+        --colours-variant: #3700b3;
+        --colours-secondary: #03dac6;
+      }
+    </style>
+    <link rel="stylesheet" href="./rollup/bundle.css" />
+  </head>
+  <body>
+    <script src="./rollup/bundle.js"></script>
+  </body>
+</html>

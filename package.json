@@ -1,0 +1,48 @@
+{
+  "name": "app-switcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "private": "true",
+  "scripts": {
+    "start": "tsc && NODE_ENV=development electron .",
+    "pack": "tsc && rollup -c && electron-builder",
+    "dev": "rollup -c -w"
+  },
+  "author": "paulpopat",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@types/uuid": "^8.3.4",
+    "electron": "^18.2.0",
+    "electron-builder": "^23.0.3",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "@paulpopat/safe-type": "^2.2.1",
+    "axios": "^0.27.2",
+    "electron-window-state": "^5.0.3",
+    "fs-extra": "^10.1.0",
+    "uuid": "^8.3.2"
+  },
+  "build": {
+    "productName": "App Switcher",
+    "appId": "paulpopat.app-switcher",
+    "mac": {
+      "category": "utility"
+    },
+    "files": [
+      "./lib/**/*.js",
+      "./rollup/bundle.js",
+      "./rollup/bundle.css",
+      "./index.html"
+    ]
+  }
+}

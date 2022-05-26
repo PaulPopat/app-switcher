@@ -1,0 +1,14 @@
+directories:
+  output: dist
+  buildResources: build
+productName: App Switcher
+appId: paulpopat.app-switcher
+mac:
+  category: utility
+files:
+  - filter:
+      - ./lib/**/*.js
+      - ./rollup/bundle.js
+      - ./rollup/bundle.css
+      - ./index.html
+electronVersion: 18.2.0
