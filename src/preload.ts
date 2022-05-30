@@ -13,4 +13,6 @@ contextBridge.exposeInMainWorld("Api", {
   AddApp: (name: string, url: string, icon_url: string) =>
     ipcRenderer.invoke("add-app", name, url, icon_url),
   DeleteApp: (id: string) => ipcRenderer.invoke("delete-app", id),
+  HandleNotifications: (callback: () => void) =>
+    ipcRenderer.on("new-notifications", callback),
 });

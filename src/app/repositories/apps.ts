@@ -1,45 +1,30 @@
-import {
-  IsArray,
-  IsObject,
-  IsString,
-  Assert,
-  IsType,
-} from "@paulpopat/safe-type";
-import { app } from "electron";
-import Fs from "fs-extra";
-import Path from "path";
-import { v4 as Guid } from "uuid";
+import { IsObject, IsString, IsType } from "@paulpopat/safe-type";
 import { GetAppIcon } from "../services/icon";
-
-const Location = Path.join(
-  app.getPath("userData"),
-  "app-switcher",
-  "apps.json"
-);
+import { GenerateStore } from "../utils/json-store";
+import { GetNotifications } from "./notification";
 
 const IsApp = IsObject({
-  id: IsString,
   name: IsString,
   url: IsString,
   icon: IsString,
 });
 
-const IsApps = IsArray(IsApp);
+const Store = GenerateStore(IsApp, "apps");
 
-export type App = IsType<typeof IsApp>;
+export type App = IsType<typeof Store.Schema>;
 
 export async function LoadApps() {
-  if (!(await Fs.pathExists(Location))) await Fs.outputJson(Location, []);
-
-  const apps = await Fs.readJson(Location);
-  Assert(IsApps, apps);
-
-  return apps;
+  const apps = await Store.GetAll();
+  return await Promise.all(
+    apps.map(async (a) => ({
+      ...a,
+      notifications: await GetNotifications(a.id),
+    }))
+  );
 }
 
 export async function GetApp(id: string) {
-  const apps = await LoadApps();
-  return apps.find((app) => app.id === id);
+  return await Store.Get(id);
 }
 
 export async function AddApp(
@@ -47,23 +32,16 @@ export async function AddApp(
   url: string,
   icon_url?: string | null
 ) {
-  const id = Guid();
   const icon = await GetAppIcon(icon_url || url);
-  const existing = await LoadApps();
   const input = {
-    id,
     name,
     url,
     icon,
   };
-  await Fs.outputJson(Location, [...existing, input]);
-  return input;
+  const id = await Store.Add(input);
+  return { ...input, id };
 }
 
 export async function DeleteApp(id: string) {
-  const existing = await LoadApps();
-  await Fs.outputJson(
-    Location,
-    existing.filter((e) => e.id !== id)
-  );
+  await Store.Delete(id);
 }

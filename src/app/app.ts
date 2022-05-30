@@ -1,12 +1,17 @@
 import { BrowserWindow, BrowserView } from "electron";
 import { App } from "./repositories/apps";
 import { Register } from "./repositories/browsers";
+import Path from "path";
 
 export async function BuildAppBrowser(win: BrowserWindow, app: App) {
-  const browser = new BrowserView();
+  const browser = new BrowserView({
+    webPreferences: {
+      preload: Path.join(__dirname, "..", "browser-preload.js"),
+    },
+  });
   let active = false;
   win.addBrowserView(browser);
-  Register(app.id, () => {
+  Register(app.id, browser, () => {
     const [x, y] = win.getContentSize();
     win.setBrowserView(browser);
     browser.setBounds({

@@ -25,6 +25,10 @@
     loading = false;
   });
 
+  Api.HandleNotifications(() => {
+    apps_promise = Api.LoadApps();
+  });
+
   function OpenApp(app) {
     return () => {
       creating = false;
@@ -83,13 +87,17 @@
             selected={open === app.name}
             on_click={OpenApp(app)}
             on_delete={DeleteApp(app)}
-            name={app.name}
+            {app}
           >
             <img src={app.icon} alt={app.name} />
           </AppButton>
         {/each}
 
-        <AppButton selected={false} on_click={StartCreate} name="Create">
+        <AppButton
+          selected={false}
+          on_click={StartCreate}
+          app={{ name: "Create", notifications: 0 }}
+        >
           <IconCreate />
         </AppButton>
       {/await}

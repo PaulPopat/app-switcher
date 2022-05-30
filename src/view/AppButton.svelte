@@ -6,16 +6,21 @@
   /** @type {() => void} */
   export let on_delete;
   export let selected = false;
-  export let name = "";
+  export let app;
 </script>
 
 <div class={C("app-button-container", ["open", selected])}>
+  {#if app.notifications > 0}
+    <div class="badge">
+      {app.notifications}
+    </div>
+  {/if}
   {#if on_delete}
-    <button class="delete-button" on:click={on_delete}>
+    <button class="badge delete" on:click={on_delete}>
       <IconMinus size="10" colour="white" />
     </button>
   {/if}
-  <span>{name}</span>
+  <span>{app.name}</span>
   <button class="app-button" on:click={on_click}>
     <slot />
   </button>
@@ -61,8 +66,8 @@
     border-color: var(--colours-text);
   }
 
-  .delete-button {
-    display: none;
+  .badge {
+    display: flex;
     background: var(--colours-primary);
     position: absolute;
     bottom: 43px;
@@ -74,17 +79,23 @@
     justify-content: center;
     border: none;
     padding: 0;
+    font-size: 10px;
   }
 
-  .delete-button:hover {
+  .badge.delete {
+    display: none;
+    background: var(--colours-error);
+  }
+
+  .badge:hover {
     background: var(--colours-variant);
   }
 
-  .delete-button:focus {
+  .badge:focus {
     background: var(--colours-secondary);
   }
 
-  .app-button-container:hover .delete-button {
+  .app-button-container:hover .delete {
     display: flex;
   }
 </style>
