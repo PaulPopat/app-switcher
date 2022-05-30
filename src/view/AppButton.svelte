@@ -47,11 +47,11 @@
     justify-content: center;
     width: var(--button-size);
     height: var(--button-size);
-    padding: var(--button-padding);
     border-radius: var(--button-size);
     background: var(--colours-surface);
     cursor: pointer;
     margin-top: 5px;
+    border: none;
   }
 
   .app-button:hover {
@@ -63,7 +63,7 @@
   }
 
   .app-button-container.open .app-button {
-    border-color: var(--colours-text);
+    border: 2px solid var(--colours-text);
   }
 
   .badge {

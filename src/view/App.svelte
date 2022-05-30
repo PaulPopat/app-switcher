@@ -119,8 +119,7 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1),
-      inset 0 0 50px var(--colours-surface-active);
+    background: var(--colours-surface);
   }
 
   #app-container::-webkit-scrollbar {
@@ -128,9 +127,9 @@
   }
 
   #app-container img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 30px;
+    max-width: calc(100% - 6px);
+    max-height: calc(100% - 6px);
+    object-fit: contain;
   }
 
   .application {
